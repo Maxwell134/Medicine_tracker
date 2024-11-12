@@ -1,22 +1,37 @@
-name: Track expired medicines
+name: Generate Expired Medicines Report
 
 on:
+  # Trigger the workflow manually or on a push to the main branch
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
-  check-expiry:
+  check-expired-medicines:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Check out the code
+        uses: actions/checkout@v2
 
-      - name: Set up python
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
 
-      - name: Sample test
+      - name: Install dependencies
         run: |
-          echo 'Hello word'
+          python -m pip install --upgrade pip
+          pip install pandas
+
+      - name: Run expired medicines check
+        run: python main.py
+
+      - name: Upload Expired Medicines Report
+        if: ${{ steps.check-expired-medicines.outputs.expired_report_exists == 'true' }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: Expired_Medicines_Report
+          path: Expired Medicines.csv
 
