@@ -26,6 +26,7 @@ jobs:
           pip install pandas
 
       - name: Run expired medicines check
+        id: check-expired-medicines
         run: python main.py
 
       - name: Upload Expired Medicines Report
