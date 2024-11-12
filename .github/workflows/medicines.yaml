@@ -1,0 +1,22 @@
+name: Track expired medicines
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check-expiry:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: action/checkout@v3
+
+      - name: Set up python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
+
+      - name: Sample test
+        run: |
+          echo 'Hello word'
+
